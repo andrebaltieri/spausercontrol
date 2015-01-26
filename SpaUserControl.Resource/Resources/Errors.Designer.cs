@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SpaUserControl.Business.Resources {
+namespace SpaUserControl.Resource.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SpaUserControl.Business.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SpaUserControl.Business.Resources.Errors", typeof(Errors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SpaUserControl.Resource.Resources.Errors", typeof(Errors).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,65 @@ namespace SpaUserControl.Business.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail already in use..
+        /// </summary>
+        public static string DuplicateEmail {
+            get {
+                return ResourceManager.GetString("DuplicateEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail or password is invalid..
         /// </summary>
         public static string InvalidCredentials {
             get {
                 return ResourceManager.GetString("InvalidCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid E-mail.
+        /// </summary>
+        public static string InvalidEmail {
+            get {
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User E-mail is invalid..
+        /// </summary>
+        public static string InvalidUserEmail {
+            get {
+                return ResourceManager.GetString("InvalidUserEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User name is invalid..
+        /// </summary>
+        public static string InvalidUserName {
+            get {
+                return ResourceManager.GetString("InvalidUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User password is invalid..
+        /// </summary>
+        public static string InvalidUserPassword {
+            get {
+                return ResourceManager.GetString("InvalidUserPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passwords does not match..
+        /// </summary>
+        public static string PasswordDoesNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordDoesNotMatch", resourceCulture);
             }
         }
         

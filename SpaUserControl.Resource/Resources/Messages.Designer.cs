@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SpaUserControl.Api.Resources {
+namespace SpaUserControl.Resource.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace SpaUserControl.Api.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Errors {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Errors() {
+        internal Messages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace SpaUserControl.Api.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SpaUserControl.Api.Resources.Errors", typeof(Errors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SpaUserControl.Resource.Resources.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace SpaUserControl.Api.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fail to create user. Please try again later..
+        ///   Looks up a localized string similar to Your password was successfully changed..
         /// </summary>
-        public static string FailedToCreateNewUser {
+        public static string PasswordSuccessfulyChanges {
             get {
-                return ResourceManager.GetString("FailedToCreateNewUser", resourceCulture);
+                return ResourceManager.GetString("PasswordSuccessfulyChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your new password is {0}.
+        /// </summary>
+        public static string ResetPasswordEmailBody {
+            get {
+                return ResourceManager.GetString("ResetPasswordEmailBody", resourceCulture);
             }
         }
     }

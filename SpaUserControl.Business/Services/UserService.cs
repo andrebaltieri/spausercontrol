@@ -1,29 +1,26 @@
-﻿using SpaUserControl.Business.Resources;
+﻿using SpaUserControl.Common.Validation;
 using SpaUserControl.Domain.Contracts.Repositories;
 using SpaUserControl.Domain.Contracts.Services;
 using SpaUserControl.Domain.Models;
+using SpaUserControl.Resource.Resources;
 using System;
 
 namespace SpaUserControl.Business.Services
 {
     public class UserService : IUserService
     {
-        private IEmailService _emailService;
-        private IPasswordService _passwordService;
         private IUserRepository _repository;
 
-        public UserService(IUserRepository repository, IEmailService emailService, IPasswordService passwordService)
+        public UserService(IUserRepository repository)
         {
             this._repository = repository;
-            this._emailService = emailService;
-            this._passwordService = passwordService;
         }
 
         public User Authenticate(string email, string password)
         {
             var user = GetByEmail(email);
 
-            if (user.Password != password)
+            if (user.Password != PasswordAssertionConcern.Encrypt(password))
                 throw new Exception(Errors.InvalidCredentials);
 
             return user;
@@ -48,16 +45,14 @@ namespace SpaUserControl.Business.Services
 
             _repository.Update(user);
         }
-
-        public void Delete(string email)
-        {
-            var user = GetByEmail(email);
-            _repository.Delete(user);
-        }
-
+        
         public void Register(string name, string email, string password, string confirmPassword)
         {
-            var user = new User(name, email,_emailService, _passwordService);
+            var hasUser = GetByEmail(email);
+            if (hasUser != null)
+                throw new Exception(Errors.DuplicateEmail);
+
+            var user = new User(name, email);
             user.SetPassword(password, confirmPassword);
             user.Validate();
 
@@ -73,13 +68,14 @@ namespace SpaUserControl.Business.Services
             return user;
         }
 
-        public void ResetPassword(string email)
+        public string ResetPassword(string email)
         {
             var user = GetByEmail(email);
-            user.ResetPassword();
+            var password = user.ResetPassword();
             user.Validate();
 
             _repository.Update(user);
+            return password;
         }
 
         public void Dispose()

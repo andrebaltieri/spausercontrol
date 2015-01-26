@@ -5,7 +5,6 @@ using SpaUserControl.Domain.Contracts.Services;
 using SpaUserControl.Domain.Models;
 using SpaUserControl.Infraestructure.Data;
 using SpaUserControl.Infraestructure.Repositories;
-using SpaUserControl.Infraestructure.Services;
 
 namespace SpaUserControl.Startup
 {
@@ -16,9 +15,6 @@ namespace SpaUserControl.Startup
             container.RegisterType<AppDataContext, AppDataContext>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserService, UserService>(new HierarchicalLifetimeManager());
-
-            container.RegisterType<IEmailService, EmailService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IPasswordService, PasswordService>(new HierarchicalLifetimeManager());
 
             container.RegisterType<User, User>(new HierarchicalLifetimeManager());
         }

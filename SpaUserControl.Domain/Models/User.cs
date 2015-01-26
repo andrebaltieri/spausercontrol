@@ -1,25 +1,18 @@
-﻿using SpaUserControl.Domain.Contracts.Services;
-using SpaUserControl.Domain.Resources;
+﻿using SpaUserControl.Common.Validation;
+using SpaUserControl.Resource.Resources;
 using System;
-using System.Text.RegularExpressions;
 
 namespace SpaUserControl.Domain.Models
 {
     public class User
     {
-        #region Private
-        private IEmailService _emailService;
-        private IPasswordService _passwordService;
-        #endregion
-
         #region Ctor
-        public User(string name, string email, IEmailService emailService, IPasswordService passwordService)
+        protected User() { }
+        public User(string name, string email)
         {
             this.Id = Guid.NewGuid();
             this.Name = name;
             this.Email = email;
-            this._emailService = emailService;
-            this._passwordService = passwordService;
         }
         #endregion
 
@@ -33,14 +26,18 @@ namespace SpaUserControl.Domain.Models
         #region Methods
         public void SetPassword(string password, string confirmPassword)
         {
-            this.Password = _passwordService.Encrypt(password);
+            AssertionConcern.AssertArgumentNotNull(password, Errors.InvalidUserPassword);
+            AssertionConcern.AssertArgumentNotNull(confirmPassword, Errors.InvalidUserPassword);
+            AssertionConcern.AssertArgumentLength(password, 6, 20, Errors.InvalidUserPassword);
+            AssertionConcern.AssertArgumentEquals(password, confirmPassword, Errors.PasswordDoesNotMatch);
+
+            this.Password = PasswordAssertionConcern.Encrypt(password);
         }
         public string ResetPassword()
         {
             string password = Guid.NewGuid().ToString().Substring(0, 8);
-            this.Password = password;
+            this.Password = PasswordAssertionConcern.Encrypt(password);
 
-            _emailService.Send(this.Email, String.Format(Messages.ResetPasswordEmailBody, password));
             return password;
         }
         public void ChangeName(string name)
@@ -49,14 +46,9 @@ namespace SpaUserControl.Domain.Models
         }
         public void Validate()
         {
-            if (this.Name.Length < 3)
-                throw new Exception(Errors.InvalidUserName);
-
-            if (!_emailService.IsValid(this.Email))
-                throw new Exception(Errors.InvalidUserEmail);
-
-            if (!_passwordService.IsValid(this.Password))
-                throw new Exception(Errors.InvalidUserPassword);
+            AssertionConcern.AssertArgumentLength(this.Name, 3, 250, Errors.InvalidUserName);
+            EmailAssertionConcern.AssertIsValid(this.Email);
+            PasswordAssertionConcern.AssertIsValid(this.Password);
         }
         #endregion
     }

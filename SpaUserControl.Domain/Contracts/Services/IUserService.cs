@@ -10,7 +10,6 @@ namespace SpaUserControl.Domain.Contracts.Services
         void Register(string name, string email, string password, string confirmPassword);
         void ChangeInformation(string email, string name);
         void ChangePassword(string email, string password, string newPassword, string confirmNewPassword);
-        void ResetPassword(string email);
-        void Delete(string email);
+        string ResetPassword(string email);
     }
 }

@@ -1,8 +1,7 @@
 ﻿namespace SpaUserControl.Domain.Contracts.Services
 {
-    public interface IEmailService
+    public interface INotificationService
     {
-        bool IsValid(string email);
         void Send(string to, string body);
     }
 }

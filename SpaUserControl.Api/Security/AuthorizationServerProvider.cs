@@ -1,10 +1,23 @@
 ﻿using Microsoft.Owin.Security.OAuth;
+using SpaUserControl.Domain.Contracts.Services;
+using SpaUserControl.Resource.Resources;
+using System;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SpaUserControl.Api.Security
 {
     public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private readonly IUserService _service;
+
+        public AuthorizationServerProvider(IUserService service)
+        {
+            _service = service;
+        }
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.Validated();
@@ -16,37 +29,27 @@ namespace SpaUserControl.Api.Security
 
             try
             {
-                //using (IAuthenticationService service = new AuthenticationService())
-                //{
-                //    var user = service.Authenticate(context.UserName, context.Password);
+                var user = _service.Authenticate(context.UserName, context.Password);
 
-                //    if (user == null)
-                //    {
-                //        context.SetError("invalid_grant", Messages.UsernameOrPasswordIsInvalid);
-                //        return;
-                //    }
+                if (user == null)
+                {
+                    context.SetError("invalid_grant", Errors.InvalidCredentials);
+                    return;
+                }
 
-                //    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 
-                //    identity.AddClaim(new Claim(ClaimTypes.Name, user.Email));
-                //    identity.AddClaim(new Claim(ClaimTypes.GivenName, user.Name));
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.Email));
+                identity.AddClaim(new Claim(ClaimTypes.GivenName, user.Name));
 
-                //    var roles = new List<string>();
-                //    foreach (var role in user.Roles)
-                //    {
-                //        identity.AddClaim(new Claim(ClaimTypes.Role, role.Name));
-                //        roles.Add(role.Name);
-                //    }
+                GenericPrincipal principal = new GenericPrincipal(identity, null);
+                Thread.CurrentPrincipal = principal;
 
-                //    GenericPrincipal principal = new GenericPrincipal(identity, roles.ToArray());
-                //    Thread.CurrentPrincipal = principal;
-
-                //    context.Validated(identity);
-                //}
+                context.Validated(identity);
             }
-            catch
+            catch(Exception ex)
             {
-                //context.SetError("invalid_grant", Messages.FailedToRetrieveUserInformation);
+                context.SetError("invalid_grant", Errors.InvalidCredentials);
             }
         }
     }
