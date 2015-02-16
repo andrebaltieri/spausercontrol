@@ -1,4 +1,5 @@
-﻿using SpaUserControl.Domain.Contracts.Services;
+﻿using SpaUserControl.Api.Attributes;
+using SpaUserControl.Domain.Contracts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using WebApi.OutputCache.V2;
 
 namespace SpaUserControl.Api.Controllers
 {
@@ -21,8 +23,10 @@ namespace SpaUserControl.Api.Controllers
 
         [HttpGet]
         [Route("")]
+        [DeflateCompression]        
+        //[CacheOutput(ClientTimeSpan = 100, ServerTimeSpan = 100)] //Install-Package Strathweb.CacheOutput.WebApi2
         public Task<HttpResponseMessage> Get()
-        {
+        {            
             HttpResponseMessage response = new HttpResponseMessage();
 
             try
