@@ -2,6 +2,7 @@
 using SpaUserControl.Domain.Models;
 using SpaUserControl.Infraestructure.Data;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SpaUserControl.Infraestructure.Repositories
@@ -23,6 +24,11 @@ namespace SpaUserControl.Infraestructure.Repositories
         public User Get(Guid id)
         {
             return _context.Users.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public List<User> Get(int skip, int take)
+        {
+            return _context.Users.OrderBy(x => x.Name).Skip(skip).Take(take).ToList();
         }
 
         public void Create(User user)

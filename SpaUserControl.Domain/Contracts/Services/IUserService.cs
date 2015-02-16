@@ -1,5 +1,6 @@
 ﻿using SpaUserControl.Domain.Models;
 using System;
+using System.Collections.Generic;
 
 namespace SpaUserControl.Domain.Contracts.Services
 {
@@ -11,5 +12,6 @@ namespace SpaUserControl.Domain.Contracts.Services
         void ChangeInformation(string email, string name);
         void ChangePassword(string email, string password, string newPassword, string confirmNewPassword);
         string ResetPassword(string email);
+        List<User> GetByRange(int skip, int take);
     }
 }

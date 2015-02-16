@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Helpers\UnityResolver.cs" />
     <Compile Include="Models\Account\ChangeInformationModel.cs" />
     <Compile Include="Models\Account\ChangePasswordModel.cs" />

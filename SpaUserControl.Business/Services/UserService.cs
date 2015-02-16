@@ -4,6 +4,7 @@ using SpaUserControl.Domain.Contracts.Services;
 using SpaUserControl.Domain.Models;
 using SpaUserControl.Resource.Resources;
 using System;
+using System.Collections.Generic;
 
 namespace SpaUserControl.Business.Services
 {
@@ -48,7 +49,7 @@ namespace SpaUserControl.Business.Services
         
         public void Register(string name, string email, string password, string confirmPassword)
         {
-            var hasUser = GetByEmail(email);
+            var hasUser = _repository.Get(email);
             if (hasUser != null)
                 throw new Exception(Errors.DuplicateEmail);
 
@@ -76,6 +77,11 @@ namespace SpaUserControl.Business.Services
 
             _repository.Update(user);
             return password;
+        }
+
+        public List<User> GetByRange(int skip, int take)
+        {
+            return _repository.Get(skip, take);
         }
 
         public void Dispose()
